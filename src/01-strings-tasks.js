@@ -107,10 +107,15 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-
+function repeatString(value, count) {
+  const result = [];
+  let counter = 0;
+  while (counter < count) {
+    counter += 1;
+    result.push(value);
+  }
+  return result.join('');
 }
-
 /**
  * Remove the first occurrence of string inside another string
  *
@@ -123,10 +128,9 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
-
 /**
  * Remove the first and last angle brackets from tag string
  *
@@ -138,11 +142,9 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-
+function unbracketTag(str) {
+  return str.replace(/\W/gi, '');
 }
-
-
 /**
  * Converts all characters of the specified string into the upper case
  *
