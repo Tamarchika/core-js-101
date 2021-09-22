@@ -68,7 +68,6 @@ function extractNameFromTemplate(value) {
   const result = value.slice(7, -1);
   return result;
 }
-console.log(extractNameFromTemplate('Hello, First_Name Last_Name!'));
 /**
  * Returns a first char of the given string.
  *
