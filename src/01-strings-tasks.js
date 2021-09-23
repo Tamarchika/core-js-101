@@ -155,8 +155,8 @@ function unbracketTag(str) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -174,10 +174,10 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-
+function extractEmails(str) {
+  const result = str.split(';');
+  return result;
 }
-
 /**
  * Returns the string representation of rectangle with specified width and height
  * using pseudograhic chars
@@ -201,11 +201,42 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-
+function getRectangleString(width, height) {
+  let rectangle = '';
+  let widthStr = '';
+  const leftTopCorner = '┌';
+  const rightTopCorner = '┐';
+  const leftBottomCorner = '└';
+  const rightBottomCorner = '┘';
+  let w = 0;
+  let h = 0;
+  let widthSpace = ' ';
+  const newLine = '\n';
+  let bothSides = '';
+  let arr = [];
+  while (w < width - 2) {
+    w += 1;
+    widthStr += '-';
+  }
+  for (widthSpace.length; widthSpace.length < width - 2; widthSpace += ' ') {
+    widthSpace += '';
+  }
+  bothSides = `|${widthSpace}|`;
+  const strHeight = newLine + bothSides;
+  while (h < height - 2) {
+    h += 1;
+    arr.push(strHeight);
+  }
+  arr = arr.join('');
+  if (height < 3) {
+    rectangle = leftTopCorner + widthStr + rightTopCorner
+    + newLine + leftBottomCorner + widthStr + rightBottomCorner;
+  } else {
+    rectangle = leftTopCorner + widthStr + rightTopCorner
+    + arr + newLine + leftBottomCorner + widthStr + rightBottomCorner + newLine;
+  }
+  return rectangle;
 }
-
-
 /**
  * Encode specified string with ROT13 cipher
  * See details:  https://en.wikipedia.org/wiki/ROT13
