@@ -7,6 +7,10 @@
  *                                                                                           *
  ******************************************************************************************* */
 
+// const { e } = require("mathjs");
+
+// const { typeOf, to } = require('mathjs');
+
 
 /**
  * Returns an area of a rectangle given by width and heigth.
@@ -19,8 +23,8 @@
  *   5, 10 => 50
  *   5, 5  => 25
  */
-function getRectangleArea(/* width, height */) {
-
+function getRectangleArea(width, height) {
+  return width * height;
 }
 
 
@@ -35,10 +39,11 @@ function getRectangleArea(/* width, height */) {
  *   3.14 => 19.729201864543903
  *   0    => 0
  */
-function getCicleCircumference(/* radius */) {
-
+function getCicleCircumference(radius) {
+  const d = radius * 2;
+  const c = Math.PI * d;
+  return c;
 }
-
 /**
  * Returns an average of two given numbers.
  *
@@ -51,8 +56,8 @@ function getCicleCircumference(/* radius */) {
  *  10, 0  => 5
  *  -3, 3  => 0
  */
-function getAverage(/* value1, value2 */) {
-
+function getAverage(value1, value2) {
+  return (value1 * 0.5) + (value2 * 0.5);
 }
 
 /**
@@ -70,10 +75,10 @@ function getAverage(/* value1, value2 */) {
  *   (0,0) (1,0)    => 1
  *   (-5,0) (10,-10) => 18.027756377319946
  */
-function getDistanceBetweenPoints(/* x1, y1, x2, y2 */) {
-
+function getDistanceBetweenPoints(x1, y1, x2, y2) {
+  const d = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+  return d;
 }
-
 /**
  * Returns a root of linear equation a*x + b = 0 given by coefficients a and b.
  *
@@ -86,10 +91,10 @@ function getDistanceBetweenPoints(/* x1, y1, x2, y2 */) {
  *   x + 8 = 0       => -8
  *   5*x = 0         => 0
  */
-function getLinearEquationRoot(/* a, b */) {
-
+function getLinearEquationRoot(a, b) {
+  const x = (0 - b) / a;
+  return x;
 }
-
 
 /**
  * Returns an angle (in radians) between two vectors given by xi and yi,
@@ -109,8 +114,11 @@ function getLinearEquationRoot(/* a, b */) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const d = x1 * x2 + y1 * y2;
+  const u = Math.sqrt(x1 * x1 + y1 * y1);
+  const v = Math.sqrt(x2 ** 2 + y2 ** 2);
+  return Math.acos(d / (u * v));
 }
 
 /**
@@ -125,10 +133,10 @@ function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
  *     5     => 5
  *     0     => 0
  */
-function getLastDigit(/* value */) {
-
+function getLastDigit(value) {
+  const str = value.toString();
+  return str.slice(-1);
 }
-
 
 /**
  * Returns a number by given string representation.
@@ -141,8 +149,8 @@ function getLastDigit(/* value */) {
  *     '37'     => 37
  * '-525.5'     => -525.5
  */
-function parseNumberFromString(/* value */) {
-
+function parseNumberFromString(value) {
+  return Number(value);
 }
 
 /**
@@ -158,8 +166,8 @@ function parseNumberFromString(/* value */) {
  *   3,3,3   => 5.196152422706632
  *   1,2,3   => 3.741657386773941
  */
-function getParallelipidedDiagonal(/* a, b, c */) {
-
+function getParallelipidedDiagonal(a, b, c) {
+  return Math.sqrt(a ** 2 + b ** 2 + c ** 2);
 }
 
 /**
@@ -179,7 +187,7 @@ function getParallelipidedDiagonal(/* a, b, c */) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
+function roundToPowerOfTen(num, pow) {
 
 }
 
@@ -200,10 +208,21 @@ function roundToPowerOfTen(/* num, pow */) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
+function isPrime(n) {
+  if (n === 1) {
+    return false;
+  }
+  if (n === 2) {
+    return true;
+  }
 
+  for (let x = 2; x < n; x += 1) {
+    if (n % x === 0) {
+      return false;
+    }
+  }
+  return true;
 }
-
 /**
  * Tries to convert value to number and returns it if conversion was successfull;
  * otherwise returns default value passed as a second argument.
@@ -219,8 +238,13 @@ function isPrime(/* n */) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-
+function toNumber(value, def) {
+  if (value && value !== 0) {
+    if (Number(value)) {
+      return Number(value);
+    }
+  }
+  return def;
 }
 
 module.exports = {

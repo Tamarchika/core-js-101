@@ -203,37 +203,42 @@ function extractEmails(str) {
  */
 function getRectangleString(width, height) {
   let rectangle = '';
-  let widthStr = '';
-  const leftTopCorner = '┌';
-  const rightTopCorner = '┐';
-  const leftBottomCorner = '└';
-  const rightBottomCorner = '┘';
-  let w = 0;
-  let h = 0;
-  let widthSpace = ' ';
-  const newLine = '\n';
-  let bothSides = '';
-  let arr = [];
-  while (w < width - 2) {
-    w += 1;
-    widthStr += '-';
-  }
-  for (widthSpace.length; widthSpace.length < width - 2; widthSpace += ' ') {
-    widthSpace += '';
-  }
-  bothSides = `|${widthSpace}|`;
-  const strHeight = newLine + bothSides;
-  while (h < height - 2) {
-    h += 1;
-    arr.push(strHeight);
-  }
-  arr = arr.join('');
-  if (height < 3) {
-    rectangle = leftTopCorner + widthStr + rightTopCorner
-    + newLine + leftBottomCorner + widthStr + rightBottomCorner;
-  } else {
-    rectangle = leftTopCorner + widthStr + rightTopCorner
-    + arr + newLine + leftBottomCorner + widthStr + rightBottomCorner + newLine;
+  const minH = 0;
+  const minW = 0;
+  const maxH = height - 1;
+  const maxW = width - 1;
+  for (let h = 0; h < height; h += 1) {
+    for (let w = 0; w <= width; w += 1) {
+      switch (true) {
+        case h === minH && w === minW:
+          rectangle += '┌';
+          break;
+        case h === minH && w === maxW:
+          rectangle += '┐';
+          break;
+        case h === maxH && w === minW:
+          rectangle += '└';
+          break;
+        case h === maxH && w === maxW:
+          rectangle += '┘';
+          break;
+
+        case w === width:
+          rectangle += '\n';
+          break;
+
+        case h === minH || h === maxH:
+          rectangle += '─';
+          break;
+        case w === minW || w === maxW:
+          rectangle += '│';
+          break;
+
+        default:
+          rectangle += ' ';
+          break;
+      }
+    }
   }
   return rectangle;
 }
@@ -253,10 +258,9 @@ function getRectangleString(width, height) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-
+function encodeToRot13(str) {
+  return str.replace(/[a-z]/gi, (letter) => String.fromCharCode(letter.charCodeAt(0) + (letter.toLowerCase() <= 'm' ? 13 : -13)));
 }
-
 /**
  * Returns true if the value is string; otherwise false.
  * @param {string} value
@@ -270,11 +274,19 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-
+function isString(value) {
+  if (typeof value === 'string') {
+    return true;
+  }
+  if (value instanceof String) {
+    return true;
+  }
+  return false;
 }
-
-
+// console.log(isString({}));
+// console.log(isString([]));
+// console.log(isString(new String('test')));
+// console.log(isString('hey'));
 /**
  * Returns playid card id.
  *
@@ -299,11 +311,20 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-
+function getCardId(value) {
+  let index = 0;
+  const arr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  arr.filter((x, i, array) => {
+    if (value.match(x)) {
+      index += array.indexOf(x);
+    }
+    return x;
+  });
+  return index;
 }
-
-
 module.exports = {
   concatenateStrings,
   getStringLength,
