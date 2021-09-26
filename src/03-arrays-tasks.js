@@ -20,11 +20,8 @@
  *    ['Array', 'Number', 'string'], 'Date'    => -1
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
-function findElement(arr, value) {
-   return arr.find((element, index, array) => {
-   value = element;
-   return array.indexOf(element)
-   });
+function findElement() { // arr, value) {
+
 }
 /**
  * Generates an array of odd numbers of the specified length
@@ -441,7 +438,7 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(/* n */) {
-  
+
 }
 
 /**
@@ -458,7 +455,7 @@ function getIdentityMatrix(/* n */) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(/* start, end */) {
-  
+
 }
 
 /**
@@ -473,7 +470,7 @@ function getIntervalArray(/* start, end */) {
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
 function distinct(/* arr */) {
-  
+
 }
 
 /**
@@ -507,7 +504,7 @@ function distinct(/* arr */) {
  *   }
  */
 function group(/* array, keySelector, valueSelector */) {
-  
+
 }
 
 
@@ -525,7 +522,7 @@ function group(/* array, keySelector, valueSelector */) {
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(/* arr, childrenSelector */) {
-  
+
 }
 
 
@@ -542,7 +539,7 @@ function selectMany(/* arr, childrenSelector */) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(/* arr, indexes */) {
-  
+
 }
 
 
@@ -565,7 +562,7 @@ function getElementByIndexes(/* arr, indexes */) {
  *
  */
 function swapHeadAndTail(/* arr */) {
-  
+
 }
 
 

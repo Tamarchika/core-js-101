@@ -187,7 +187,7 @@ function getParallelipidedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(num, pow) {
+function roundToPowerOfTen() { // num, pow) {
 
 }
 
