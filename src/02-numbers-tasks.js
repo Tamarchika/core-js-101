@@ -187,10 +187,10 @@ function getParallelipidedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen() { // num, pow) {
-
+function roundToPowerOfTen(num, pow) {
+  const powOfTen = 10 ** pow;
+  return Math.round(num / powOfTen) * powOfTen;
 }
-
 /**
  * Returns true is the number is prime; otherwise false.
  * See: https://en.wikipedia.org/wiki/Primality_test
