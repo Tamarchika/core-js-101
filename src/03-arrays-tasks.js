@@ -254,10 +254,9 @@ function getMovingSum(/* arr */) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getSecondItems(/* arr */) {
-
+function getSecondItems(arr) {
+  return arr.filter((x, i) => i % 2 !== 0);
 }
-
 
 /**
  * Propagates every item in sequence its position times
@@ -342,10 +341,9 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-
+function getItemsSum(arr) {
+  return arr.reduce((x, y) => x + y, 0);
 }
-
 /**
  * Returns the number of all falsy value in the specified array
  *
