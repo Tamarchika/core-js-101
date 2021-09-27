@@ -205,10 +205,9 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-
+function toCsvText(arr) {
+  return arr.join('\n').split(',').join(',');
 }
-
 /**
  * Transforms the numeric array into the according array of squares:
  *   f(x) = x * x
@@ -220,10 +219,9 @@ function toCsvText(/* arr */) {
  *   [ 0, 1, 2, 3, 4, 5 ] => [ 0, 1, 4, 9, 16, 25 ]
  *   [ 10, 100, -1 ]      => [ 100, 10000, 1 ]
  */
-function toArrayOfSquares(/* arr */) {
-
+function toArrayOfSquares(arr) {
+  return arr.map((x) => x * x);
 }
-
 
 /**
  * Transforms the numeric array to the according moving sum array:
@@ -239,10 +237,14 @@ function toArrayOfSquares(/* arr */) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-
+function getMovingSum(arr) {
+  let last = 0;
+  return arr.map((el) => {
+    const newEl = el + last;
+    last = newEl;
+    return newEl;
+  });
 }
-
 /**
  * Returns every second item from the specified array:
  *
@@ -272,10 +274,14 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-
+function propagateItemsByPositionIndex(arr) {
+  return arr.reduce((x, y, index) => {
+    const acc = x;
+    const current = y;
+    [...Array(index + 1)].forEach(() => { acc[acc.length] = current; });
+    return acc;
+  }, []);
 }
-
 
 /**
  * Returns the 3 largest numbers from the specified array
@@ -290,10 +296,14 @@ function propagateItemsByPositionIndex(/* arr */) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-
+function get3TopItems(arr) {
+  let newArr = [];
+  newArr = arr.sort((x, y) => y - x);
+  while (arr.length > 3) {
+    newArr.pop();
+  }
+  return newArr;
 }
-
 
 /**
  * Returns the number of positive numbers from specified array
@@ -308,10 +318,16 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-
+function getPositivesCount(arr) {
+  const newArr = [];
+  arr.filter((elem) => {
+    if (typeof elem === 'number' && elem > 0) {
+      newArr.push(elem);
+    }
+    return elem;
+  });
+  return newArr.length;
 }
-
 /**
  * Sorts digit names
  *
@@ -325,8 +341,9 @@ function getPositivesCount(/* arr */) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-
+function sortDigitNamesByNumericOrder(arr) {
+  const alphabet = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  return arr.sort((a, b) => alphabet.indexOf(a) - alphabet.indexOf(b));
 }
 
 /**
@@ -356,10 +373,9 @@ function getItemsSum(arr) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-
+function getFalsyValuesCount(arr) {
+  return arr.filter((x) => (!(x))).length;
 }
-
 /**
  * Returns a number of all occurences of the specified item in an array
  *
@@ -374,8 +390,10 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurences(/* arr, item */) {
-
+function findAllOccurences(arr, item) {
+  let result = [];
+  result = arr.filter((x) => x === item);
+  return result.length;
 }
 
 /**
