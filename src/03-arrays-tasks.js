@@ -7,6 +7,8 @@
  *                                                                                            *
  ******************************************************************************************** */
 
+// const { map } = require('mathjs');
+
 
 /**
  * Returns an index of the specified element in array or -1 if element is not found
@@ -35,13 +37,9 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-  let odd = 1;
-  const arr = [1];
-  while (arr.length < len) {
-    odd += 2;
-    arr.push(odd);
-  }
-  return arr;
+  const def = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31];
+  def.splice(len);
+  return def;
 }
 
 /**
@@ -275,11 +273,10 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  return arr.reduce((x, y, index) => {
-    const acc = x;
-    const current = y;
-    [...Array(index + 1)].forEach(() => { acc[acc.length] = current; });
-    return acc;
+  return arr.reduce((previous, current, index) => {
+    const items = new Array(index + 1);
+    items.fill(current);
+    return previous.concat(items);
   }, []);
 }
 
@@ -297,12 +294,9 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-  let newArr = [];
-  newArr = arr.sort((x, y) => y - x);
-  while (arr.length > 3) {
-    newArr.pop();
-  }
-  return newArr;
+  return arr
+    .sort((a, b) => (a > b ? -1 : 1))
+    .slice(0, 3);
 }
 
 /**
@@ -485,13 +479,12 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  const arr = [];
-  let num = start - 1;
-  while (num < end) {
-    num += 1;
-    arr.push(num);
-  }
-  return arr;
+  const result = new Array(end - start);
+  result.fill(0);
+  return result.reduce((previous) => {
+    previous.push(previous[previous.length - 1] + 1);
+    return previous;
+  }, [start]);
 }
 /**
  * Returns array containing only unique values from the specified array.
@@ -537,11 +530,16 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-
+function group(array, keySelector, valueSelector) {
+  return array.reduce((prev, curr) => {
+    const key = keySelector(curr);
+    const value = valueSelector(curr);
+    const arr = prev.get(key) || [];
+    arr.push(value);
+    prev.set(key, arr);
+    return prev;
+  }, new Map());
 }
-
-
 /**
  * Projects each element of the specified array to a sequence
  * and flattens the resulting sequences into one array.
@@ -555,10 +553,12 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-
+function selectMany(arr, childrenSelector) {
+  return arr.reduce((prev, curr) => {
+    const child = childrenSelector(curr);
+    return prev.concat(child);
+  }, []);
 }
-
 
 /**
  * Returns an element from the multidimentional array by the specified indexes.
@@ -572,8 +572,18 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-
+function getElementByIndexes(arr, indexes) {
+  let result = null;
+  let newArr = arr;
+  indexes.map((item, index) => {
+    if (index !== indexes.length - 1) {
+      newArr = arr[item];
+    } else {
+      result = arr[item];
+    }
+    return newArr;
+  });
+  return result;
 }
 
 
@@ -595,8 +605,15 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-
+function swapHeadAndTail(arr) {
+  const { length } = arr;
+  const result = [];
+  if (length % 2 === 0) {
+    return result.concat(arr.slice(length / 2, length),
+      arr.slice(0, length / 2));
+  }
+  return result.concat(arr.slice(length / 2 + 1, length),
+    arr[parseInt(length / 2, 10)], arr.slice(0, length / 2));
 }
 
 
