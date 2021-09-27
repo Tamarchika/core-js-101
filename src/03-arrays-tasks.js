@@ -407,8 +407,8 @@ function findAllOccurences(arr, item) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 
@@ -438,8 +438,9 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => a.country.localeCompare(b.country) * 1000
+  + a.city.localeCompare(b.city));
 }
 
 /**
@@ -460,8 +461,14 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-
+function getIdentityMatrix(n) {
+  const mat = new Array(n).fill([]);
+  return mat.map((row, index) => {
+    let x = row;
+    x = new Array(n).fill(0);
+    x[index] = 1;
+    return x;
+  });
 }
 
 /**
@@ -477,10 +484,15 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-
+function getIntervalArray(start, end) {
+  const arr = [];
+  let num = start - 1;
+  while (num < end) {
+    num += 1;
+    arr.push(num);
+  }
+  return arr;
 }
-
 /**
  * Returns array containing only unique values from the specified array.
  *
