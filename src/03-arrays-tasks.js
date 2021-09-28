@@ -577,16 +577,14 @@ function getElementByIndexes(arr, indexes) {
   let newArr = arr;
   indexes.map((item, index) => {
     if (index !== indexes.length - 1) {
-      newArr = arr[item];
+      newArr = newArr[item];
     } else {
-      result = arr[item];
+      result = newArr[item];
     }
-    return newArr;
+    return item;
   });
   return result;
 }
-
-
 /**
  * Swaps the head and tail of the specified array:
  * the head (first half) of array move to the end, the tail (last half) move to the start.
