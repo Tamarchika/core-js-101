@@ -116,33 +116,93 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+
+function error(turn1, turn2, name1, name2) {
+  if (turn1 > turn2) {
+    throw new Error(
+      'Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element',
+    );
+  }
+  if (
+    (name1 === name2 && name1 === 'element')
+    || name1 === 'id'
+    || name1 === 'pseudoElement'
+  ) {
+    throw new Error(
+      'Element, id and pseudo-element should not occur more then one time inside the selector',
+    );
+  }
+}
+
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  value: '',
+  element(value) {
+    const num = 1;
+    const name = 'element';
+    const obj = Object.create(cssSelectorBuilder);
+    error(this.num, num, this.name, name);
+    obj.value = this.value + value;
+    obj.num = num;
+    obj.name = name;
+    return obj;
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    const num = 2;
+    const name = 'id';
+    const obj = Object.create(cssSelectorBuilder);
+    error(this.num, num, this.name, name);
+    obj.value = `${this.value}#${value}`;
+    obj.num = num;
+    obj.name = name;
+    return obj;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    const num = 3;
+    const obj = Object.create(cssSelectorBuilder);
+    error(this.num, num);
+    obj.value = `${this.value}.${value}`;
+    obj.num = num;
+    return obj;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    const num = 4;
+    const obj = Object.create(cssSelectorBuilder);
+    obj.value = `${this.value}[${value}]`;
+    obj.num = num;
+    error(this.num, num);
+    return obj;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    const num = 5;
+    const obj = Object.create(cssSelectorBuilder);
+    error(this.num, num);
+    obj.value = `${this.value}:${value}`;
+    obj.num = num;
+    return obj;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    const num = 6;
+    const name = 'pseudoElement';
+    const obj = Object.create(cssSelectorBuilder);
+    error(this.num, num, this.name, name);
+    obj.value = `${this.value}::${value}`;
+    obj.name = name;
+    obj.num = num;
+    return obj;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    const obj = Object.create(cssSelectorBuilder);
+    obj.value = `${selector1.value} ${combinator} ${selector2.value}`;
+    return obj;
+  },
+  stringify() {
+    return this.value;
   },
 };
 
