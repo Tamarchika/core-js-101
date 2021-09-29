@@ -280,10 +280,27 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const code = ccn.toString().split('');
+  for (let i = 0; i < code.length; i += 1) {
+    if ((code.length - 1) % 2 === 0) {
+      if (i % 2 !== 0) {
+        code[i] *= 2;
+      }
+    }
+    if ((code.length - 1) % 2 !== 0) {
+      if (i % 2 === 0) {
+        code[i] *= 2;
+      }
+    }
+    if (Number(code[i] > 9)) {
+      code[i] = code[i].toString().split('').reduce((a, c) => Number(a) + Number(c));
+    }
+  }
+  const sum = code.reduce((acc, curr) => Number(acc) + Number(curr));
+  const controlDigit = sum % 10;
+  return controlDigit === 0;
 }
-
 /**
  * Returns the digital root of integer:
  *   step1 : find sum of all digits
@@ -333,8 +350,18 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brackets = ['[]', '()', '{}', '<>'];
+  let balanced = str;
+  for (let i = 0; i < brackets.length; i += 1) {
+    while (balanced) {
+      if (balanced.includes(brackets[i])) {
+        balanced = balanced.replace(brackets[i], '');
+        i = 0;
+      } else break;
+    }
+  }
+  return !balanced;
 }
 
 
@@ -358,8 +385,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -398,8 +425,11 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const trans = (a) => a[0].map((x, i) => a.map((y) => y[i]));
+  const dot = (a, b) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);
+  const prod = (a, b) => a.map((x) => trans(b).map((y) => dot(x, y)));
+  return prod(m1, m2);
 }
 
 
