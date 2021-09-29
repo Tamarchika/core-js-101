@@ -402,8 +402,11 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((x) => x.split('/'));
+  const r = arr[0].map((_, x) => arr.map((item) => item[x]));
+  const result = r.filter((y) => y.every((el) => el === y[0]));
+  return [...result, ['']].map((item) => item[0]).join('/');
 }
 
 
@@ -463,8 +466,35 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const x = (t) => {
+    const pos = position;
+    for (let i = 0; i < 3; i += 1) {
+      if (pos[0][i] === pos[1][i]
+        && pos[0][i] === pos[2][i]
+        && pos[0][i] === t) {
+        return t;
+      }
+      if (pos[i][0] === pos[i][1]
+        && pos[i][0] === pos[i][2]
+        && pos[i][0] === t) {
+        return t;
+      }
+    }
+    if (pos[0][0] === pos[1][1]
+      && pos[2][2] === pos[0][0]
+      && pos[0][0] === t) {
+      return t;
+    }
+    if (pos[0][2] === pos[1][1]
+      && pos[2][0] === pos[0][2]
+      && pos[2][0] === t) {
+      return t;
+    }
+    return undefined;
+  };
+
+  return x('0') || x('X');
 }
 
 
