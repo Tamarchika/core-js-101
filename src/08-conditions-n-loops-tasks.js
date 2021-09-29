@@ -251,10 +251,11 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  let str = num.toString().split('');
+  str = str.reverse().join('');
+  return Number(str);
 }
-
 
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
